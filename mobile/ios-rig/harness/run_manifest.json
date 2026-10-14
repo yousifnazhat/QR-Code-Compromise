@@ -1,0 +1,48 @@
+{
+  "phase": "P6",
+  "work_item": "W6.8",
+  "platform": "iOS Simulator (macOS lab box)",
+  "chain_class": "C7 — app-authored bridge input-validation flaws (deliberately flawed-by-design WKScriptMessageHandler demo; the C1 platform class is absent on iOS by design — see mobile/docs/ios-surfaces.md §1)",
+  "chain": "QR URL sheet -> scan/open (physical slot or simctl openurl) -> Safari or demo app WKWebView (U) -> page JS postMessage to p6rigBridge (E) -> deliberately unvalidated handler executes marker command / proof callback (app-process) -> TCP session to Kali-side listener stub (C)",
+  "policy": "docs/governance/policy.md §1 lab-only, §2 benign demo bodies / no default endpoints, §7 historical-patched-only + coordinated disclosure for novel findings. Simulator + owned devices ONLY.",
+  "listener": "reuses the OS-agnostic mobile/rig/harness/listener_stub.py (explicit --host/--port only)",
+  "target": {
+    "simulator": "any booted iOS Simulator iPhone (xcrun simctl)",
+    "demo_app": "mobile/ios-rig/demo-app/P6RigDemo (WKWebView + p6rigdemo:// scheme)",
+    "app_build": "physical slot: Xcode -> create project per demo-app/README.md -> Build & Run on simulator",
+    "note": "on iOS the demonstrated flaw is the APP AUTHOR's own bridge design, not a platform hole — that is the Android-vs-iOS contrast finding"
+  },
+  "steps": [
+    { "n": 1, "action": "physical slot: install Xcode, switch xcode-select, first-launch platforms", "cmd": "see mobile/ios-rig/README.md §2" },
+    { "n": 2, "action": "list/boot a simulator", "cmd": "mobile/ios-rig/harness/sim_list.sh && mobile/ios-rig/harness/sim_boot.sh" },
+    { "n": 3, "action": "physical slot: build + run the demo app on the simulator", "cmd": "Xcode: Build & Run (per demo-app/README.md)" },
+    { "n": 4, "action": "start the Kali-side session listener (same stub as Android rig; macOS-side here if single-box)", "cmd": "python3 mobile/rig/harness/listener_stub.py --host <lab-ip> --port 4445" },
+    { "n": 5, "action": "serve the staging dir", "cmd": "python3 -m http.server 8000 --directory mobile/ios-rig/staging" },
+    { "n": 6, "action": "copy payload.example.html to payload.html with YOUR lab host", "cmd": "edit the op:callback message host/port" },
+    { "n": 7, "action": "print the URL as a QR sheet (physical slot: scan it with a lab phone; instrumented path below)", "cmd": "mobile/qr/url_sheet.sh http://<lab-ip>:8000/payload.html out/p6-ios-sheet.pdf" },
+    { "n": 8, "action": "U stage: open the URL on the simulator", "cmd": "mobile/ios-rig/harness/open_url.sh http://<lab-ip>:8000/payload.html" },
+    { "n": "8b", "action": "scheme-dispatch arm (C4 reachability): p6rigdemo:// loads the page inside the demo app directly", "cmd": "mobile/ios-rig/harness/open_url.sh p6rigdemo://demo?url=http://<lab-ip>:8000/payload.html" },
+    { "n": 9, "action": "capture device-side telemetry", "cmd": "mobile/ios-rig/harness/capture_logs.sh" },
+    { "n": 10, "action": "verify session on the listener side", "cmd": "listener prints: session N proof: 'P6RIG-SESSION ios=<BuildFingerprint-ish>' then 'VERIFIED'" }
+  ],
+  "expected_log_markers": [
+    "P6RIG U stage: loading url=http://<lab-ip>:8000/payload.html",
+    "P6RIG BRIDGE_REACHED op=mark tag=stage-e-bridge-reached",
+    "P6RIG BRIDGE_EXEC cmd=<marker command>",
+    "P6RIG BRIDGE_EXEC done",
+    "P6RIG BRIDGE_CALLBACK target=<lab-ip>:4445",
+    "P6RIG BRIDGE_CALLBACK sent"
+  ],
+  "control_arm_expected": "opening the same URL in Safari (plain http:// arm, no p6rigdemo:// scheme) must NOT emit any BRIDGE_* marker — the negative control proving the markers belong to the demo app's deliberately flawed handler, not to Safari or the page itself.",
+  "telemetry_to_capture": [
+    "xcrun simctl spawn ... log stream --predicate 'eventMessage CONTAINS \"P6RIG\"' (U->E->C marker timeline)",
+    "listener_stub.py session log (proof line + peer IP/port + wall-clock)",
+    "simctl scheme-dispatch arm log (C4 reachability: which component handled p6rigdemo://)",
+    "run wall-clock start/end for Stage-2 timing analysis"
+  ],
+  "cannot_measure_here": [
+    "historical WebKit n-days (C3 rows) — no 2016-era simulator runtimes; needs old owned hardware",
+    "C6 install/signature class — no iOS sideload chain exists to reproduce",
+    "real-device behavior of the exec arm (simulator apps run on the host Mac; iOS apps cannot fork processes) — see demo-app README honesty note"
+  ]
+}

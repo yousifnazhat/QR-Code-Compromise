@@ -42,6 +42,7 @@ but explicitly *not* the shell end-state.
 | C4 | `intent://` / custom-scheme handler abuse | U→E (component reach) | CVE-2014-3502, CVE-2016-4782, CVE-2017-5096, CVE-2017-17553 |
 | C5 | Page-embedded media-decoder RCE | U→E→shell | CVE-2015-1538 |
 | C6 | Install-flow / package-signature bypass | U→(download/consent)→shell | CVE-2013-4787, CVE-2017-13156 |
+| C7 | Hybrid-framework app-bridge input-validation flaws | U→E→shell (app-authored bridge) | CVE-2012-6637, CVE-2015-5207, CVE-2015-5208 |
 | M0 | MDM/enrollment **profile** class (non-shell) | U→consent→policy control | documented below; no CVE rows |
 
 ---
@@ -242,7 +243,7 @@ but explicitly *not* the shell end-state.
 
 ## 3. Cross-references
 
-- Evidence rows for C1–C6 (all historical, all patched, all with public
+- Evidence rows for C1–C7 (all historical, all patched, all with public
   sources): `mobile/inventory/chain-classes.csv` (regenerate:
   `mobile/inventory/build_inventory.py`).
 - Mirror-image defender view: `mobile/docs/defender-parity.md`.
@@ -250,3 +251,6 @@ but explicitly *not* the shell end-state.
   `mobile/rig/README.md`.
 - Research staging and disclosure gating (policy §7):
   `mobile/docs/research-plan.md`.
+- iOS taxonomy (W6.6, same class IDs): `mobile/docs/ios-surfaces.md` —
+  includes the Android-vs-iOS contrast table and the C1-absent-by-design
+  finding for iOS bridge surfaces; iOS rig: `mobile/ios-rig/README.md`.

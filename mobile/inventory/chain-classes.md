@@ -9,7 +9,7 @@
 > contains no novel-vulnerability research; any *new* finding goes
 > through coordinated disclosure per `docs/governance/policy.md` §7.
 
-Generated: 2026-10-14 · Source APIs: NVD CVE API 2.0 · Android Security Bulletin pages · Rows: 15 · Classes: C1, C2, C3, C4, C5, C6
+Generated: 2026-10-14 · Source APIs: NVD CVE API 2.0 · Android Security Bulletin pages · Rows: 22 · Classes: C1, C2, C3, C4, C5, C6, C7
 
 ## C1 — JS-bridge RCE (addJavascriptInterface family)
 
@@ -39,6 +39,9 @@ Taxonomy surface: `mobile/docs/surface-taxonomy.md` · Defender mirror: `mobile/
 | [CVE-2018-17463](https://nvd.nist.gov/vuln/detail/CVE-2018-17463) | Google Chrome before 70.0.3538.64 (V8) | Chrome 70.0.3538.64 stable (2018-10) | [Chrome Releases: Stable Channel Update for Desktop (Oct 2018)](https://chromereleases.googleblog.com/2018/10/stable-channel-update-for-desktop.html) | U->E: URL->Chrome renderer->V8 type confusion->RCE (shell) |
 | [CVE-2019-5782](https://nvd.nist.gov/vuln/detail/CVE-2019-5782) | Google Chrome before 72.0.3626.81 (V8) | Chrome 72.0.3626.81 stable (2019-01) | [NVD reference: https://chromereleases.googleblog.com/2019/01/stable-channel-update-for-desktop.html](https://chromereleases.googleblog.com/2019/01/stable-channel-update-for-desktop.html) | U->E: URL->Chrome renderer->V8 optimization bug->RCE (shell) |
 | [CVE-2020-6418](https://nvd.nist.gov/vuln/detail/CVE-2020-6418) | Google Chrome before 80.0.3987.122 (V8; exploited in the wild) | Chrome 80.0.3987.122 stable (2020-02) | [Chrome Releases: Stable Channel Update for Desktop (Feb 2020, in-the-wild ack)](https://chromereleases.googleblog.com/2020/02/stable-channel-update-for-desktop_24.html) | U->E: URL->Chrome renderer->V8 type confusion->RCE (shell) |
+| [CVE-2012-3748](https://nvd.nist.gov/vuln/detail/CVE-2012-3748) | Apple iOS before 6.0.1; Safari before 6.0.2 (WebKit race condition) | iOS 6.0.1 / Safari 6.0.2 (Apple advisory) | [NVD reference: http://support.apple.com/kb/HT5567](http://support.apple.com/kb/HT5567) | U->E: URL->Safari/WebKit->JavaScript-array race->arbitrary code execution |
+| [CVE-2018-4233](https://nvd.nist.gov/vuln/detail/CVE-2018-4233) | Apple iOS before 11.4; Safari before 11.1.2; iTunes/iCloud for Windows (WebKit) | iOS 11.4 / Safari 11.1.2 (Apple advisory HT208848) | [NVD reference: https://support.apple.com/HT208848](https://support.apple.com/HT208848) | U->E: URL->Safari/WebKit->memory corruption->code execution |
+| [CVE-2021-1879](https://nvd.nist.gov/vuln/detail/CVE-2021-1879) | Apple iOS before 12.5.2/14.4.2; watchOS before 7.3.3 (WebKit; Apple acknowledged in-the-wild exploitation) | iOS 12.5.2 / 14.4.2, watchOS 7.3.3 (out-of-band Apple update, 2021-03) | [NVD reference: https://support.apple.com/en-us/HT212256](https://support.apple.com/en-us/HT212256) | U->E: URL->Safari/WebKit->universal cross-site scripting->same-origin break (session hijack / payload pivot) |
 
 ## C4 — intent:// and custom-scheme handler abuse
 
@@ -58,6 +61,7 @@ Taxonomy surface: `mobile/docs/surface-taxonomy.md` · Defender mirror: `mobile/
 | CVE | Affected | Patch reference | Public writeup | Chain stage |
 |---|---|---|---|---|
 | [CVE-2015-1538](https://nvd.nist.gov/vuln/detail/CVE-2015-1538) | Android before 5.1.1 LMY48I (libstagefright) | Nexus Security Bulletin 2015-08-01 (LMY48I) · also in ASB-2015-08 | [jduck/cve-2015-1538-1: public stsc MP4 atom exploit](https://github.com/jduck/cve-2015-1538-1) | U->E: URL->page embeds crafted MP4->libstagefright integer overflow->RCE (shell) |
+| [CVE-2010-1797](https://nvd.nist.gov/vuln/detail/CVE-2010-1797) | FreeType before 2.4.2, as used in Apple iOS before 4.0.2 (MobileSafari) | iOS 4.0.2 (FreeType 2.4.2); publicized via the jailbreakme.com page-JS exploit | [NVD reference: http://support.apple.com/kb/HT4291](http://support.apple.com/kb/HT4291) | U->E: URL->MobileSafari renders crafted PDF/font (CFF Type2 CharStrings)->stack overflow->RCE (shell) |
 
 ## C6 — Install-flow / package-signature bypass
 
@@ -67,6 +71,16 @@ Taxonomy surface: `mobile/docs/surface-taxonomy.md` · Defender mirror: `mobile/
 |---|---|---|---|---|
 | [CVE-2013-4787](https://nvd.nist.gov/vuln/detail/CVE-2013-4787) | Android 1.6 Donut through 4.2 Jelly Bean (APK signature verification) | Android 4.3+ (Google bug 8219321; Bluebox disclosure 2013-07) | [ZDNET: Google releases fix to OEMs for Bluebox 'Master Key' Android security hole](http://www.zdnet.com/google-releases-fix-to-oems-for-blue-security-android-security-hole-7000017782/) | U->download/consent: URL->trojaned APK accepted as same-signature update->install->code on device |
 | [CVE-2017-13156](https://nvd.nist.gov/vuln/detail/CVE-2017-13156) | Android 5.1.1 through 8.0 (ART / v1 APK signature scheme) | Android Security Bulletin 2017-12-01 (A-64211847) · also in ASB-2017-12 | [Guardsquare: Janus vulnerability (CVE-2017-13156) analysis](https://www.guardsquare.com/blog/new-android-vulnerability-allows-attackers-to-modify-apps-without-affecting-their-signatures-guardsquare) | U->download/consent: URL->DEX-prepended APK passes v1 signature->install as update->code on device |
+
+## C7 — Hybrid-framework app-bridge input-validation flaws (app-authored bridges)
+
+Taxonomy surface: `mobile/docs/surface-taxonomy.md` · Defender mirror: `mobile/docs/defender-parity.md`
+
+| CVE | Affected | Patch reference | Public writeup | Chain stage |
+|---|---|---|---|---|
+| [CVE-2012-6637](https://nvd.nist.gov/vuln/detail/CVE-2012-6637) | Apache Cordova 3.3.0 and earlier; Adobe PhoneGap 2.9.0 and earlier (all platforms incl. iOS) | Cordova 3.4.0 / PhoneGap 2.9.1 (anchored domain-whitelist regex) | [NVD record (references in nvd_refs column)](https://nvd.nist.gov/vuln/detail/CVE-2012-6637) | U->E: URL->hybrid-app bridge->non-anchored whitelist regex bypass->bridge API reachable from attacker origin |
+| [CVE-2015-5207](https://nvd.nist.gov/vuln/detail/CVE-2015-5207) | Apache Cordova iOS before 4.0.0 | Cordova iOS 4.0.0 (vendor advisory, 2015) | [NVD reference: http://jvn.jp/en/jp/JVN35341085/index.html](http://jvn.jp/en/jp/JVN35341085/index.html) | U->E: URL->WKWebView hybrid app->URL-whitelist bypass->arbitrary resource load (bridge pivot) |
+| [CVE-2015-5208](https://nvd.nist.gov/vuln/detail/CVE-2015-5208) | Apache Cordova iOS before 4.0.0 | Cordova iOS 4.0.0 (vendor advisory, 2015) | [NVD reference: http://jvn.jp/en/jp/JVN41772178/index.html](http://jvn.jp/en/jp/JVN41772178/index.html) | U->E: crafted link->Cordova iOS bridge->arbitrary plugin execution (app-process code) |
 
 ## Appendix A — NVD keyword mining (candidate corpus)
 

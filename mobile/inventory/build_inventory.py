@@ -140,6 +140,44 @@ SEEDS = [
          writeup="Guardsquare: Janus vulnerability (CVE-2017-13156) analysis",
          writeup_url="https://www.guardsquare.com/blog/new-android-vulnerability-allows-attackers-to-modify-apps-without-affecting-their-signatures-guardsquare",
          chain_stage="U->download/consent: URL->DEX-prepended APK passes v1 signature->install as update->code on device"),
+    # C5 — page-embedded media-decoder RCE (iOS)
+    dict(class_id="C5", cve="CVE-2010-1797",
+         affected="FreeType before 2.4.2, as used in Apple iOS before 4.0.2 (MobileSafari)",
+         patch_ref="iOS 4.0.2 (FreeType 2.4.2); publicized via the jailbreakme.com page-JS exploit",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: URL->MobileSafari renders crafted PDF/font (CFF Type2 CharStrings)->stack overflow->RCE (shell)"),
+    # C3 — browser/WebView engine n-day, iOS family (WebKit mandate)
+    dict(class_id="C3", cve="CVE-2012-3748",
+         affected="Apple iOS before 6.0.1; Safari before 6.0.2 (WebKit race condition)",
+         patch_ref="iOS 6.0.1 / Safari 6.0.2 (Apple advisory)",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: URL->Safari/WebKit->JavaScript-array race->arbitrary code execution"),
+    dict(class_id="C3", cve="CVE-2018-4233",
+         affected="Apple iOS before 11.4; Safari before 11.1.2; iTunes/iCloud for Windows (WebKit)",
+         patch_ref="iOS 11.4 / Safari 11.1.2 (Apple advisory HT208848)",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: URL->Safari/WebKit->memory corruption->code execution"),
+    dict(class_id="C3", cve="CVE-2021-1879",
+         affected="Apple iOS before 12.5.2/14.4.2; watchOS before 7.3.3 (WebKit; Apple acknowledged in-the-wild exploitation)",
+         patch_ref="iOS 12.5.2 / 14.4.2, watchOS 7.3.3 (out-of-band Apple update, 2021-03)",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: URL->Safari/WebKit->universal cross-site scripting->same-origin break (session hijack / payload pivot)"),
+    # C7 — hybrid-framework app-bridge input-validation flaws (app-authored bridges)
+    dict(class_id="C7", cve="CVE-2012-6637",
+         affected="Apache Cordova 3.3.0 and earlier; Adobe PhoneGap 2.9.0 and earlier (all platforms incl. iOS)",
+         patch_ref="Cordova 3.4.0 / PhoneGap 2.9.1 (anchored domain-whitelist regex)",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: URL->hybrid-app bridge->non-anchored whitelist regex bypass->bridge API reachable from attacker origin"),
+    dict(class_id="C7", cve="CVE-2015-5207",
+         affected="Apache Cordova iOS before 4.0.0",
+         patch_ref="Cordova iOS 4.0.0 (vendor advisory, 2015)",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: URL->WKWebView hybrid app->URL-whitelist bypass->arbitrary resource load (bridge pivot)"),
+    dict(class_id="C7", cve="CVE-2015-5208",
+         affected="Apache Cordova iOS before 4.0.0",
+         patch_ref="Cordova iOS 4.0.0 (vendor advisory, 2015)",
+         writeup=None, writeup_url=None,
+         chain_stage="U->E: crafted link->Cordova iOS bridge->arbitrary plugin execution (app-process code)"),
 ]
 
 CLASS_NAMES = {
@@ -149,6 +187,7 @@ CLASS_NAMES = {
     "C4": "intent:// and custom-scheme handler abuse",
     "C5": "Page-embedded media-decoder RCE",
     "C6": "Install-flow / package-signature bypass",
+    "C7": "Hybrid-framework app-bridge input-validation flaws (app-authored bridges)",
 }
 
 # Keyword mining pass: shows the NVD keyword corpus for each class family.

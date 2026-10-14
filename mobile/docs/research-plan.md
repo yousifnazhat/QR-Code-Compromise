@@ -38,10 +38,13 @@ chain classes exist, all vendor-patched; what defenders see.
 | Item | Deliverable | Status |
 |---|---|---|
 | W6.1 surface taxonomy | `mobile/docs/surface-taxonomy.md` | done |
-| W6.2 known chain-class inventory (public data) | `mobile/inventory/build_inventory.py` → `chain-classes.{csv,md}` (15 rows, all patched, all public sources) | done |
+| W6.2 known chain-class inventory (public data) | `mobile/inventory/build_inventory.py` → `chain-classes.{csv,md}` (22 rows incl. iOS classes, all patched, all public sources) | done |
 | W6.3 rig scaffolding (C1 historical class) | `mobile/rig/` (target app + harness + run manifest) | done (scaffold) |
-| W6.4 defender parity | `mobile/docs/defender-parity.md` | done |
+| W6.4 defender parity | `mobile/docs/defender-parity.md` (incl. iOS control column + C7 row) | done |
 | W6.5 this plan | this file | done |
+| W6.6 iOS surface taxonomy | `mobile/docs/ios-surfaces.md` (same schema; C1-absent-by-design finding; contrast table) | done |
+| W6.7 iOS chain-class inventory expansion | C3/C5/C7 iOS rows (CVE-2012-3748, CVE-2018-4233, CVE-2021-1879, CVE-2010-1797, CVE-2012-6637, CVE-2015-5207, CVE-2015-5208) in `chain-classes.csv` | done |
+| W6.8 iOS simulator rig | `mobile/ios-rig/` — layered `ARCHITECTURE.md` (L0–L4), C7 demo app, simctl harness, and the `tests/` definition-of-done suite (guard+listener green on the no-Xcode Mac; sim-path skipped until Xcode) | done (scaffold; Xcode-later run defined by tests) |
 
 **Exit criteria (all met):** taxonomy covers browser renderers, in-app
 WebViews/JS bridges, `intent://` and scheme handlers, app links, scanner-app

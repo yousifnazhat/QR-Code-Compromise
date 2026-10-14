@@ -117,6 +117,52 @@ is where the rig (`mobile/rig/`) can supply a first-hand measurement.
   (developer.android.com/work); treat "update installed for app X from a
   non-store source" as an incident-grade signal.
 
+### C7 — Hybrid-framework app-bridge input-validation flaws · CVE-2012-6637, CVE-2015-5207, CVE-2015-5208
+
+Cross-platform class (Android and iOS — the **iOS C1-analogue**; see
+`mobile/docs/ios-surfaces.md` §1): the *app/framework author's* bridge
+validation fails, not the platform's.
+- **Structural control:** framework-side fixes (Cordova 3.4.0/4.x anchored
+  whitelists, plugin gating); platform-side, modern hybrid frameworks run
+  bridges through explicit message surfaces with no automatic method
+  exposure. There is **no platform telemetry** for a bad app bridge.
+- **Telemetry:** none on either platform (same honest gap as C1's runtime
+  column — a page calling a bridge is indistinguishable from normal traffic
+  unless the app logs it; the iOS rig demo app logs markers precisely
+  because stock surfaces do not).
+- **Defender action:** app review must treat every bridge surface as an
+  input-validation audit item (origin allowlists, message schema validation,
+  command allowlists); MDM app control limits which hybrid apps are
+  installed at all.
+
+### C7 / C1 asymmetry note (iOS vs Android)
+
+On Android the residue is apps *compiled against legacy targets* keeping the
+platform's own historical footgun (C1). On iOS there is no platform footgun:
+the residue is purely **app-authored bridge code** (C7), so the defender's
+audit point moves from build config (targetSdk) to source review (every
+`WKScriptMessageHandler` implementation).
+
+## 2b. iOS control column (per class)
+
+iOS-side controls mirror the same class IDs (`mobile/docs/ios-surfaces.md` §8
+has the full Android-vs-iOS contrast table):
+
+| Class | iOS structural control | iOS telemetry / defender view |
+|---|---|---|
+| C1 | **ABSENT by design** (message-passing bridges only — developer.apple.com/documentation/webkit/wkscriptmessagehandler); nothing to police platform-side | n/a — the finding itself |
+| C3 | WebKit engine centralized (App Review 2.5.6 mandate, developer.apple.com/app-store/review/guidelines/); out-of-band security updates for exploited bugs (CVE-2021-1879, Apple advisory support.apple.com/HT212256) | Apple publishes WebKit advisories (webkit.org/security); patch latency via OTA is the defender metric; ITW exploitation is vendor-acknowledged |
+| C4 | Universal links verify domain ownership (developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content) — the documented fix for scheme hijacking | scheme dispatch is silent (same blind spot as Android); MDM app allowlists are the control |
+| C5 | Decoder bugs fixed via the same iOS security-update channel | vendor-side crash statistics; old patch levels are the residue |
+| C6 | **DOESN'T MAP**: mandatory code signing + no consumer sideload (Apple Platform Security guide, support.apple.com/guide/security/welcome/web); enterprise-signed app abuse is revocable (cert revocation kills the app class fleet-wide) | enterprise-signing abuse is visible to the issuing org; UEM sees managed installs |
+| C7 | App Review (static) + no runtime platform marker | bridge abuse invisible to the OS; audit = source review of every app bridge |
+| M0 | Profile install requires explicit user consent with visible Settings entry (Apple Platform Deployment guide) | **loudest on iOS**: profile install + UEM enrollment events, cannot be silent |
+
+**App Store review / enterprise signing controls (iOS-wide):** every
+consumer-distributed app passes automated + human review, and enterprise
+distribution rides revocable certificates — a structural control with no
+Android equivalent at the consumer layer (Play has review too, but the
+*sideload* path it polices does not exist on iOS).
 ### M0 — MDM/enrollment profile class (non-shell) · documented in taxonomy §S7
 
 - **What defenders see:** the **loudest telemetry in the whole map** —
@@ -142,9 +188,14 @@ is where the rig (`mobile/rig/`) can supply a first-hand measurement.
 | C4 | Chrome intent:// policy | **none** — silent dispatch | installed handler apps (app control) |
 | C5 | monthly ASB/OTA | media crashes (mostly vendor-side) | old patch levels |
 | C6 | signature-scheme fixes + install prompts + Play Protect | prompts + install-source logs | "non-store update" events |
+| C7 | framework fixes (anchored whitelists) + app review; no platform gate | **none** — app-authored bridges are invisible to the OS | every app's bridge source review (iOS: WKScriptMessageHandler; Android: framework bridges) |
 | M0 | profile/admin activation UI | enrollment events (UEM) | users ignoring consent screens |
 
 **Cross-links:** class definitions and surfaces — `surface-taxonomy.md`;
 evidence rows — `mobile/inventory/chain-classes.csv`; rig measurement —
 `mobile/rig/README.md`; staged research — `research-plan.md` (novel findings
 → policy §7 coordinated disclosure).
+
+**Cross-links (iOS):** iOS surface taxonomy — `ios-surfaces.md` (contrast
+table §8); iOS rig — `mobile/ios-rig/README.md`; iOS rows in
+`chain-classes.csv` (C3/C5/C7). Novel findings → policy §7.
