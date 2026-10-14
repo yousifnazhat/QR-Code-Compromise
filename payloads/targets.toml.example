@@ -1,0 +1,29 @@
+# targets.toml.example — copy to targets.toml (gitignored) and fill with YOUR
+# AUTHORIZED LAB values only. Every value below is a placeholder:
+#   attacker.example is reserved (RFC 2606) and 10.10.10.10 is RFC1918
+#   example-only. Do NOT commit a real targets.toml.
+#
+# Flat TOML subset consumed by run_matrix.py: key = "value" lines only.
+# Keys map (case-insensitively) to <PLACEHOLDER> markers in templates/.
+
+# HTTP staging host for mshta-001 / curl-001 / certutil-001
+staging_host = "attacker.example"
+
+# URL path segments under the staging host
+staged_path = "staging"
+hta_name = "payload.hta"
+
+# Name used by curl-001 / certutil-001 for both the URL and the %TEMP% drop
+output_name = "demo.exe"
+
+# SMB staging host + share for msiexec-001 / unc-001
+smb_host = "10.10.10.10"
+smb_share = "lab"
+msi_name = "setup.msi"
+exe_name = "tool.exe"
+
+# ps-enc-001: base64 of UTF-16LE bytes of the (benign, lab) script text.
+# Example below is base64(UTF-16LE("Write-Output 'qr-compromise-lab-demo'")).
+# Generate your own with:
+#   python3 -c "import base64,sys;print(base64.b64encode(sys.argv[1].encode('utf-16-le')).decode())" 'your lab command'
+base64_payload = "VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAHEAcgAtAGMAbwBtAHAAcgBvAG0AaQBzAGUALQBsAGEAYgAtAGQAZQBtAG8AJwA="

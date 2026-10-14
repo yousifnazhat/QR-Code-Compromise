@@ -1,0 +1,4 @@
+# Real lab target values must never be committed (placeholders only, GX.2).
+targets.toml
+results/raw/
+__pycache__/

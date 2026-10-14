@@ -1,0 +1,57 @@
+# P3 payload manifest — contract #4 (COORDINATION.md, frozen).
+# Consumed by payloads/run_matrix.py and by P4's detection runbook (W4.3).
+# Field semantics (see payloads/README.md):
+#   id           locked ID set: ps-enc-001 mshta-001 curl-001 certutil-001 msiexec-001 unc-001
+#   runner       contract enum (winr|powershell|mshta|curl|certutil|msiexec|unc)
+#   staging      inline (payload body keystroke-injected) | staged (body fetched at runtime)
+#   layout_safe  true if rendered command is expected to survive P2's
+#                layout-safe encoder (W2.2) on US/DE/FR without remapping
+#   win_build    minimum Windows 10 build the runner form requires
+#                ("any" = present on every Win10 build)
+#   amsi         AMSI outcome: bypassed|blocked|na — "na" until VM runs land
+#                (results recorded in payloads/results/killchain.csv)
+#   notes        cross-references + caveats
+# ID ORDER IS LOCKED: P4 validates against this list verbatim. Do not rename,
+# reorder, or append without coordinator approval (contract amendment flow).
+- id: ps-enc-001
+  runner: powershell
+  staging: inline
+  layout_safe: false
+  win_build: "1507"
+  amsi: na
+  notes: "Base64 alphabet includes + / = which are not alphanumeric; layout_safe=false pending P2 W2.2 layout-safe encoder (qr-ducky encode --layout). UTF-16LE+base64 inflation is analyzed in docs/capacity-notes.md."
+- id: mshta-001
+  runner: mshta
+  staging: staged
+  layout_safe: true
+  win_build: "any"
+  amsi: na
+  notes: "Rendered command uses only [a-z0-9 :/.] — no shift-row symbols beyond ':', expected layout-safe on US/DE/FR; verify via P2 bench. Script engines inside .hta are AMSI-instrumented (docs/amsi-clm-matrix.md)."
+- id: curl-001
+  runner: curl
+  staging: staged
+  layout_safe: false
+  win_build: "1803"
+  amsi: na
+  notes: "Requires quoted cmd /c with && chaining; double-quote, % and & characters are layout-sensitive (US/DE/FR rows differ). Re-evaluate layout_safe after P2 W2.2 encoder + bench; curl.exe first ships in Windows 10 1803 System32."
+- id: certutil-001
+  runner: certutil
+  staging: staged
+  layout_safe: false
+  win_build: "any"
+  amsi: na
+  notes: "Same quoting/layout constraints as curl-001; works on pre-1803 builds where curl.exe is absent. 'CertUtil URL Cache' UA string is a strong IOC — feeds W4.3 artifact runbook."
+- id: msiexec-001
+  runner: msiexec
+  staging: staged
+  layout_safe: true
+  win_build: "any"
+  amsi: na
+  notes: "Rendered command uses only [a-z0-9 \:.] — expected layout-safe. AMSI/CLM not applicable (no script engine), but see template header: MsiInstaller eventlog + SMB artifacts feed W4.3."
+- id: unc-001
+  runner: unc
+  staging: staged
+  layout_safe: true
+  win_build: "any"
+  amsi: na
+  notes: "Control template: minimal keystroke baseline (no LOLBin wrapper). No script engine, so amsi not applicable by construction; on-access AV/Defender scanning still applies to the remote image."
