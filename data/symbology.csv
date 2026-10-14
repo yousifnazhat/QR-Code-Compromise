@@ -1,0 +1,3 @@
+symbology,ec_level,medium,module_mm,distance_cm,angle_deg,attempts,successes,mean_decode_s
+QR,L,EXAMPLE-paper,4.0,15,0,3,3,1.24
+QR,H,EXAMPLE-screen,2.0,10,30,3,1,2.05
