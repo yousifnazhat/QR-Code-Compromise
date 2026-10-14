@@ -1,0 +1,4 @@
+<resources>
+    <!-- P6 rig target app (deliberately vulnerable — lab only). -->
+    <string name="app_name">P6 Rig Target (VULN)</string>
+</resources>

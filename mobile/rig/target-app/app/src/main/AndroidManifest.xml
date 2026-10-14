@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  P6 RIG TARGET APP — DELIBERATELY VULNERABLE (lab only).
+  AUTHORIZATION — LAB ONLY per docs/governance/policy.md §1/§7: emulator and
+  owned devices only. Reproduces the historical, already-patched C1 class
+  (addJavascriptInterface, CVE-2012-6636 family) for measurement + telemetry.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="@string/app_name"
+        android:allowBackup="false">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- QR-scanner-style URL entry: this component is the BROWSABLE
+                 handler for the p6rig:// scheme (C4 reachability + C1 E-stage
+                 measurement: a scanned/decoded URL lands directly in the
+                 vulnerable WebView). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="p6rig" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

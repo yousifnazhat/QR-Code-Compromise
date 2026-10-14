@@ -1,0 +1,38 @@
+// P6 RIG TARGET APP — DELIBERATELY VULNERABLE (lab only).
+//
+// AUTHORIZATION — LAB ONLY (docs/governance/policy.md §1, §7): install and run
+// this app ONLY on the project's emulator/owned test devices. It reproduces the
+// historical, already-patched C1 class (addJavascriptInterface reflection RCE,
+// CVE-2012-6636 family) at a legacy API level so the QR->URL->bridge->callback
+// chain can be measured and its defender telemetry captured.
+//
+// targetSdk 16 is the point: the Android 4.2 (API 17) fix gates Java-Reflection
+// access to bridge objects on the APP's targetSdkVersion — a targetSdk-16 app
+// remains vulnerable on any OS build. Do NOT ship this anywhere.
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.qrcompromise.p6rig'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.qrcompromise.p6rig"
+        minSdk 16
+        // DELIBERATE: keeps the C1 reflection window open (fix keys on >= 17).
+        targetSdk 16
+        versionCode 1
+        versionName "0.1"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

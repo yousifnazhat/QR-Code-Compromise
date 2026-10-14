@@ -1,0 +1,5 @@
+// P6 rig target — root build file.
+// Deliberately vulnerable lab build (see mobile/rig/README.md, policy §7).
+plugins {
+    id 'com.android.application' version '8.5.2' apply false
+}
