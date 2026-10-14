@@ -1,0 +1,42 @@
+# qrducky.toml — example configuration for qr-ducky (contract #2).
+# Search order: --config flag > $QRDUCKY_CONFIG > ./qrducky.toml
+# If no file is found, built-in defaults apply for [sheet]; bench and
+# engagement targets must ALWAYS be declared explicitly (GX.2: no default
+# endpoints, no implicit targets).
+
+[sheet]
+module_mm = 4.0      # QR module (dot) edge length in millimeters
+ec = "M"             # QR error correction level: L | M | Q | H
+
+# W2.4 calibration harness — drives the P0 replay rig (lab/rig/,
+# phase/p0-foundations) over serial: SESSION/PREFIX/SUFFIX/CPS/JITTER setup,
+# then BEGIN -> <=47-byte fragments with stop-and-wait ACK -> END.
+# serial_port is a CAPTURE SLOT the human fills once the rig is attached;
+# --dry-run exercises the exact protocol conversation without hardware.
+[bench]
+default_repeat = 5
+
+[bench.targets.vm-alpha]
+serial_port = ""     # PLACEHOLDER — fill when the rig is attached
+baud = 115200
+cps = 20            # rig typing rate 1..200
+jitter_ms = 15      # rig inter-key jitter 0..250
+layout = "US"       # active layout of the target VM
+payload = ""        # or pass --payload <file> explicitly per run
+
+[bench.targets.vm-bravo]
+serial_port = ""
+baud = 115200
+cps = 20
+jitter_ms = 15
+layout = "DE"
+
+# W2.3 engagement mode — per-target variant tagging for lab attribution.
+# Targets MUST be declared here to be usable; there is no code path that
+# invents an endpoint or target. URLs live in the payload under test,
+# never committed here.
+[engagement.targets.vm-alpha]
+method = "url-param"   # append bid=<beacon-id> to the payload's (lab) URL
+
+[engagement.targets.vm-bravo]
+method = "ps-comment"  # append a PowerShell comment " # <beacon-id>"
