@@ -40,3 +40,9 @@ Before any public release of tooling:
 
 - MIT license (see LICENSE). Cite this repository and the companion papers for derived research.
 - Prior art integrated in this project's bibliography is credited in `papers/taxonomy/sources.bib`.
+
+## 7. Responsible disclosure (P6 and any vulnerability research)
+
+- Vulnerability research targets **owned lab rigs only**: emulators, owned test devices, and deliberately vulnerable builds. Nothing in this project is pointed at devices or users we do not own or control.
+- Any **novel** vulnerability found in third-party software (browsers, WebViews, deep-link/scheme handlers, apps) is handled as **coordinated disclosure**: private report to the vendor, embargo until patch, no public weaponized exploit for an unpatched consumer surface. The published output is the class analysis, not a turnkey attack.
+- Chain classes demonstrated in the lab use **historical, already-patched** vulnerabilities against deliberately vulnerable builds (e.g., old Android API levels) for measurement and defender-telemetry purposes.

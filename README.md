@@ -21,6 +21,7 @@ A USB barcode/QR scanner configured as a HID keyboard wedge ("keyboard wedge" mo
 | [`payloads/`](payloads/) | P3 | Run-dialog payload corpus (6 template classes: powershell-enc, mshta, curl, certutil, msiexec, UNC), manifest + validator, kill-chain matrix runner, AMSI/CLM matrix |
 | [`detection/`](detection/) | P4 | Keystroke-timing injection detector (dataset tooling, features, baseline classifier), blue-team artifact runbook (36 rows), HID allowlisting feasibility toolkit |
 | [`papers/`](papers/) | P5 | QR threat taxonomy (lure / keystroke-store / session-token) with verified bibliography, session-lock-window study design (IRB path), non-Windows feasibility plans, venue targets |
+| [`mobile/`](mobile/) | P6 *(primary)* | Mobile lure-chain research: post-scan URL-reachable attack-surface taxonomy, known chain-class inventory (public CVE/patch-history mining), Android emulator rig against deliberately vulnerable builds, URL-QR generation via `qr-ducky`, defender telemetry parity, disclosure policy for novel findings |
 | [`COORDINATION.md`](COORDINATION.md) | fleet | Worktree/branch layout, frozen interface contracts, merge rules |
 
 ## Quickstart
