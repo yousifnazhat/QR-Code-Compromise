@@ -1,0 +1,42 @@
+==================================================================
+DETECTOR PIPELINE REPORT — SYNTHETIC BASELINE
+NOTE: metrics below are a SYNTHETIC-BASELINE on generator output, not real-capture detection claims.
+==================================================================
+sessions: 20 human, 20 injected (scanner/rig), 40 total
+split: 20 train / 20 test (stratified by session)
+threshold: session flagged injected when ia_mean < 74.23 ms (train margin 66.10 ms)
+
+-- held-out test metrics --
+  accuracy  : 1.0000
+  precision : 1.0000
+  recall    : 1.0000  (every injected session caught)
+  FPR (human flagged as injected): 0.0000  [0/10]
+  FNR (injected missed): 0.0000  [0/10]
+  F1        : 1.0000
+  confusion : tp=10 fp=0 tn=10 fn=0
+
+-- full-dataset pass (train+test, leakage-prone; consistency check) --
+  recall on all injected sessions: 1.0000 [20/20]
+  FPR on human sessions          : 0.0000 [0/20]
+
+-- flagged test sessions --
+  h-0000   human    ia_mean=  169.31 ms burst_frac=0.000  ok
+  h-0003   human    ia_mean=  154.84 ms burst_frac=0.000  ok
+  h-0006   human    ia_mean=  164.85 ms burst_frac=0.000  ok
+  h-0007   human    ia_mean=  180.73 ms burst_frac=0.000  ok
+  h-0011   human    ia_mean=  151.10 ms burst_frac=0.000  ok
+  h-0014   human    ia_mean=  181.67 ms burst_frac=0.000  ok
+  h-0015   human    ia_mean=  169.08 ms burst_frac=0.000  ok
+  h-0017   human    ia_mean=  151.55 ms burst_frac=0.000  ok
+  h-0018   human    ia_mean=  162.37 ms burst_frac=0.000  ok
+  h-0019   human    ia_mean=  153.06 ms burst_frac=0.000  ok
+  s-0004   INJECTED ia_mean=    5.34 ms burst_frac=1.000  ok
+  s-0005   INJECTED ia_mean=    4.13 ms burst_frac=1.000  ok
+  s-0006   INJECTED ia_mean=    1.70 ms burst_frac=1.000  ok
+  s-0007   INJECTED ia_mean=    3.99 ms burst_frac=1.000  ok
+  s-0008   INJECTED ia_mean=    3.97 ms burst_frac=1.000  ok
+  s-0011   INJECTED ia_mean=    2.29 ms burst_frac=1.000  ok
+  s-0012   INJECTED ia_mean=    9.21 ms burst_frac=1.000  ok
+  s-0014   INJECTED ia_mean=    8.57 ms burst_frac=1.000  ok
+  s-0016   INJECTED ia_mean=    4.87 ms burst_frac=1.000  ok
+  s-0019   INJECTED ia_mean=    5.12 ms burst_frac=1.000  ok
