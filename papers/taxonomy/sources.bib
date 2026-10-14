@@ -1,0 +1,235 @@
+% sources.bib — W5.1 taxonomy paper bibliography (phase/p5-survey)
+%
+% VERIFICATION POLICY (project charter, P5): every entry below was re-verified
+% against a primary web source on 2026-10-14 by the P5 agent. Predecessor-agent
+% leads were treated as LEADS ONLY and each was independently confirmed or
+% corrected; corrections are noted inline. Verification notes are the `%`
+% comments immediately above each entry (source + what was checked).
+%
+% Entry count: 13 (requirement: >= 10).
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via arXiv API (arxiv.org/abs/2204.04086).
+% Predecessor lead "Gone Quishing authors: Sharevski, Devine, Pieroni, Jachim"
+% CONFIRMED exactly; published 2022-04-08; categories cs.CR, cs.HC.
+% ---------------------------------------------------------------------------
+@article{sharevski2022gonequishing,
+  author  = {Sharevski, Filipo and Devine, Amy and Pieroni, Emma and Jachim, Peter},
+  title   = {Gone Quishing: A Field Study of Phishing with Malicious {QR} Codes},
+  journal = {arXiv preprint arXiv:2204.04086},
+  year    = {2022},
+  note    = {173-participant field study; 67\% credential sign-up; Quishing Awareness Scale (QAS)}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via arXiv API (arxiv.org/abs/2505.03451).
+% Identified the "quishing ML-detection arXiv:2505.03451" lead: authors Fouad
+% Trad and Ali Chehab (AUB), published 2025-05-06; XGBoost AUC 0.9106.
+% ---------------------------------------------------------------------------
+@article{trad2025quishing,
+  author  = {Trad, Fouad and Chehab, Ali},
+  title   = {Detecting Quishing Attacks with Machine Learning Techniques Through {QR} Code Analysis},
+  journal = {arXiv preprint arXiv:2505.03451},
+  year    = {2025},
+  note    = {QR pixel/structure ML without payload extraction; best AUC 0.9133 after feature reduction}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via ACM DL (doi 10.1145/2818000.2818040, ACSAC '15
+% proceedings page) and the ACSAC 2015 program PDF (acsac.org/2015/
+% program-final/4/151.pdf, header: "Dave Tian, Adam Bates, Kevin Butler").
+% PREDECESSOR CORRECTION LEAD CONFIRMED: venue is ACSAC 2015 (31st Annual
+% Computer Security Applications Conference), NOT USENIX Security '16.
+% Authors: Dave (DJ) Tian, Adam Bates, Kevin Butler.
+% ---------------------------------------------------------------------------
+@inproceedings{tian2015goodusb,
+  author    = {Tian, Dave and Bates, Adam and Butler, Kevin},
+  title     = {Defending Against Malicious {USB} Firmware with {GoodUSB}},
+  booktitle = {Proceedings of the 31st Annual Computer Security Applications Conference (ACSAC 2015)},
+  year      = {2015},
+  address   = {Austin, TX, USA},
+  publisher = {ACM},
+  doi       = {10.1145/2818000.2818040},
+  note      = {Descriptor-based USB device mediation for the Linux USB stack; anti-BadUSB permission enforcement}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via SpringerLink chapter page (doi 10.1007/
+% 978-3-319-07620-1_8) and the book page for 10.1007/978-3-319-07620-1.
+% VENUE CORRECTION vs predecessor lead "Krombholz FC'14 survey": the venue is
+% HAS 2014 (Second International Conference on Human Aspects of Information
+% Security, Privacy, and Trust, held as part of HCI International 2014,
+% Heraklion, Crete, Greece, June 22-27), LNCS volume 8533, pp. 79-90, editors
+% Tryfonas and Askoxylakis -- NOT Financial Cryptography. Full author list
+% confirmed from Springer: Krombholz, Fruehwirt, Kieseberg, Kapsalis, Huber,
+% Weippl (all SBA Research).
+% ---------------------------------------------------------------------------
+@inproceedings{krombholz2014qrsurvey,
+  author    = {Krombholz, Katharina and Fr{\"u}hwirt, Peter and Kieseberg, Peter and Kapsalis, Ioannis and Huber, Markus and Weippl, Edgar},
+  title     = {{QR} Code Security: A Survey of Attacks and Challenges for Usable Security},
+  booktitle = {Human Aspects of Information Security, Privacy, and Trust (HAS 2014), HCI International 2014},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {8533},
+  pages     = {79--90},
+  year      = {2014},
+  address   = {Heraklion, Crete, Greece},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-319-07620-1_8}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via ACM DL (doi 10.1145/1971519.1971593, MoMM '10
+% proceedings) and the Workshop on Trustworthy Ubiquitous Computing (TwUC)
+% citation PDF (cosy.sbg.ac.at): full seven-author list Kieseberg, Leithner,
+% Mulazzani, Munroe, Schrittwieser, Sinha, Weippl; MoMM 2010 (8th
+% International Conference on Advances in Mobile Computing and Multimedia),
+% pp. 430-435. Cited-by ~287 per ACM DL.
+% ---------------------------------------------------------------------------
+@inproceedings{kieseberg2010qr,
+  author    = {Kieseberg, Peter and Leithner, Manuel and Mulazzani, Martin and Munroe, Lindsay and Schrittwieser, Sebastian and Sinha, Mayank and Weippl, Edgar},
+  title     = {{QR} Code Security},
+  booktitle = {Proceedings of the 8th International Conference on Advances in Mobile Computing and Multimedia (MoMM 2010)},
+  pages     = {430--435},
+  year      = {2010},
+  address   = {Paris, France},
+  publisher = {ACM},
+  doi       = {10.1145/1971519.1971593}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via SpringerLink chapter page (doi 10.1007/
+% 978-3-642-41320-9_4): authors Vidas, Owusu, Wang, Zeng, Cranor, Christin
+% (all Carnegie Mellon University); FC 2013 (International Conference on
+% Financial Cryptography and Data Security), LNCS 7862, pp. 52-69; also
+% cross-checked against DBLP (conf/fc/VidasOWZCC13).
+% ---------------------------------------------------------------------------
+@inproceedings{vidas2013qrishing,
+  author    = {Vidas, Timothy and Owusu, Emmanuel and Wang, Shuai and Zeng, Cheng and Cranor, Lorrie Faith and Christin, Nicolas},
+  title     = {{QRishing}: The Susceptibility of Smartphone Users to {QR} Code Phishing Attacks},
+  booktitle = {Financial Cryptography and Data Security (FC 2013)},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {7862},
+  pages     = {52--69},
+  year      = {2013},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-642-41320-9_4},
+  note      = {Field experiments: 85\% of scanners followed the encoded URL; 225 scanners across 139 locations in four weeks}
+}
+
+% ---------------------------------------------------------------------------
+% IDENTIFIED AND VERIFIED 2026-10-14: this is the Kowalewski/Lassak/Duer-
+% muth/Schnitzler QR-security paper named in the predecessor lead. Verified
+% via the USENIX presentation page (usenix.org/conference/usenixsecurity25/
+% presentation/kowalewski), the USENIX Security '25 technical-sessions page,
+% and the paper PDF: Marvin Kowalewski and Leona Lassak (Ruhr University
+% Bochum), Markus Duermuth (Leibniz University Hannover), Theodor Schnitzler
+% (Maastricht University); 34th USENIX Security Symposium, Seattle, Aug 13-15
+% 2025.
+% ---------------------------------------------------------------------------
+@inproceedings{kowalewski2025scanned,
+  author    = {Kowalewski, Marvin and Lassak, Leona and D{\"u}rmuth, Markus and Schnitzler, Theodor},
+  title     = {Scanned and Scammed: Insecurity by {ObsQRity}? Measuring User Susceptibility and Awareness of {QR} Code-Based Attacks},
+  booktitle = {Proceedings of the 34th USENIX Security Symposium (USENIX Security 2025)},
+  year      = {2025},
+  address   = {Seattle, WA, USA},
+  publisher = {USENIX Association}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via the OWASP QRLJacking repository README
+% (github.com/OWASP/QRLJacking, Author section: "Mohamed Abdelbasset Elnouby
+% (@SymbianSyMoh)") and the OWASP community attack page (community.owasp.org
+% /attacks/Qrljacking). Predecessor lead CONFIRMED: the author is exactly
+% "Mohamed Abdelbasset Elnouby". No publication year is stated by the
+% primary source, so none is asserted here (access year used instead).
+% ---------------------------------------------------------------------------
+@misc{elnouby2026qrjacking,
+  author       = {Elnouby, Mohamed Abdelbasset},
+  title        = {{QRLJacking} -- A New Social Engineering Attack Vector},
+  howpublished = {OWASP Foundation project ({QRLJacking} repository and wiki)},
+  url          = {https://github.com/OWASP/QRLJacking},
+  note         = {Session hijacking via "Login with QR code"; OWASP attack page with mitigations: session confirmation, IP/geo binding, short expiry. Accessed 2026-10-14}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via the Black Hat USA 2014 briefings schedule
+% (blackhat.com/us-14/schedule/briefings-07.html: "BadUSB - On Accessories
+% that Turn Evil, Karsten Nohl & Jakob Lell, 09:00-10:00") and the SRLabs
+% presentation PDF (srlabs.de), which additionally lists Sascha Krissler;
+% Nohl and Lell are the cited presenting authors.
+% ---------------------------------------------------------------------------
+@inproceedings{nohl2014badusb,
+  author    = {Nohl, Karsten and Lell, Jakob},
+  title     = {{BadUSB} -- On Accessories that Turn Evil},
+  booktitle = {Black Hat USA 2014 Briefings},
+  year      = {2014},
+  address   = {Las Vegas, NV, USA},
+  note      = {USB firmware reprogramming to masquerade as HID keyboards/network adapters; foundational for the scanner-as-HID threat model}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 by reading attack.mitre.org/techniques/T1674 directly:
+% Input Injection, ID T1674, tactic Execution, platforms Linux/Windows/macOS,
+% created 2025-03-27, version 1.0, contributor Alexey Kleymenov. The page's
+% Detection Strategy table lists DET0568 with analytics AN1567, AN1568,
+% AN1569 exactly as described in the taxonomy paper; mitigations M1038
+% (Execution Prevention / PowerShell CLM) and M1034 (Limit Hardware
+% Installation) confirmed.
+% ---------------------------------------------------------------------------
+@misc{mitre2025t1674,
+  author       = {{MITRE}},
+  title        = {Input Injection, Technique {T1674} -- Enterprise {ATT\&CK}},
+  howpublished = {MITRE ATT\&CK v20},
+  year         = {2025},
+  url          = {https://attack.mitre.org/techniques/T1674/},
+  note         = {Detection Strategy DET0568, analytics AN1567--AN1569; created 2025-03-27. Accessed 2026-10-14}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 via docs.hak5.org ("USB Rubber Ducky -- DuckyScript
+% Basics -- Keystroke Injection"), shop.hak5.org (USB Rubber Ducky product
+% page: "To a computer it's a keyboard, typing at superhuman speeds"), and the
+% Hak5 DuckyScript 3.0 page. Vendor documentation cited as product source;
+% DuckyScript 1.0 dates to 2010 per Hak5, but the entry is cited accessed-
+% date style to avoid asserting a publication year.
+% ---------------------------------------------------------------------------
+@misc{hak52026ducky,
+  author       = {{Hak5}},
+  title        = {{USB Rubber Ducky}: Keystroke Injection and {DuckyScript} Documentation},
+  howpublished = {Hak5 LLC documentation},
+  url          = {https://docs.hak5.org/hak5-usb-rubber-ducky/ducky-script-basics/keystroke-injection},
+  note         = {Commodity HID keystroke-injection hardware; baseline for scanner-as-HID equivalence. Accessed 2026-10-14}
+}
+
+% ---------------------------------------------------------------------------
+% VERIFIED 2026-10-14 by reading the IBM Think Insights article directly
+% (ibm.com/think/insights/quishing-growing-threat-hiding-plain-sight): author
+% Josh Nadeau, Cybersecurity Writer; page metadata date 31 October 2024
+% (dcterms.date 2024-10-31); references the FTC consumer alert on QR-code
+% phishing. This satisfies the "citable IBM quishing trend source" lead --
+% it is IBM-published primary content, not a third-party press summary.
+% ---------------------------------------------------------------------------
+@misc{nadeau2024quishing,
+  author       = {Nadeau, Josh},
+  title        = {Quishing: A Growing Threat Hiding in Plain Sight},
+  howpublished = {IBM Think Insights},
+  year         = {2024},
+  url          = {https://www.ibm.com/think/insights/quishing-growing-threat-hiding-plain-sight},
+  note         = {Industry trend framing of QR-code phishing (Class L); published 31 October 2024. Accessed 2026-10-14}
+}
+
+% ---------------------------------------------------------------------------
+% PROJECT SELF-CITATION: this repository (github.com/yousifnazhat/
+% QR-Code-Compromise), README on the branch history of this worktree
+% (Windows + R keystroke-injection chain, reverse-shell staging, healthcare
+% framing, remediation list). Cited as the Class-K primary artifact; claims
+% drawn from the README are re-stated in outline.md rather than assumed.
+% ---------------------------------------------------------------------------
+@misc{qrcc2026repo,
+  author       = {{QR-Code-Compromise project}},
+  title        = {{QR-Code-Compromise}: {QR} Scanner-as-{HID} Keystroke Injection Research Bench},
+  howpublished = {GitHub repository},
+  year         = {2026},
+  url          = {https://github.com/yousifnazhat/QR-Code-Compromise},
+  note         = {Class-K primary artifact: Win+R payload chain, scanner timing matrices (P1), detection dataset (P4). Accessed 2026-10-14}
+}
