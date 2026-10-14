@@ -42,6 +42,8 @@ uv run --with pytest python -m pytest detection/tests -q
 uv run python -m detection.detector.pipeline detection/dataset/samples/synthetic-baseline.jsonl --label source
 ```
 
+**▶ End-to-end walkthrough** — payload → printed QR → the scan moment → execution → evidence collection: [`docs/tutorials/scan-to-execution.md`](docs/tutorials/scan-to-execution.md)
+
 Test suites: `qrducky/` 98 tests · `detection/` 57 tests · `payloads/` validator + negative-path checks.
 
 ## Research status
