@@ -13,7 +13,7 @@ Multi-worktree research layout. One repo, six phase branches, disjoint directori
 | `p3-payloads/` | `phase/p3-payloads` | W3.1 LOLBin kill-chain · W3.2 inline vs staged · W3.3 anti-forensics · W3.4 AMSI/CLM matrix | `payloads/` |
 | `p4-detection/` | `phase/p4-detection` | W4.1 timing dataset · W4.2 detector · W4.3 artifact runbook · W4.4 allowlisting feasibility | `detection/` |
 | `p5-survey/` | `phase/p5-survey` | W5.1 taxonomy paper · W5.2 lock-window study · W5.3 non-Windows targets | `papers/` |
-| `p6-mobile-lure/` | `phase/p6-mobile-lure` | W6.1 mobile URL-surface taxonomy · W6.2 known chain-class inventory · W6.3 emulator rig · W6.4 defender parity · W6.5 novel-chain research (disclosure-gated per policy §7) | `mobile/` |
+| `p6-mobile-lure/` | `phase/p6-mobile-lure` | W6.1 mobile URL-surface taxonomy · W6.2 known chain-class inventory · W6.3 emulator rig · W6.4 defender parity · W6.5 novel-chain research (disclosure-gated per policy §7) · W6.6 iOS surface taxonomy · W6.7 iOS chain-class inventory · W6.8 iOS simulator rig | `mobile/` |
 
 Scope rule: commits land only in your phase's directories. Shared contracts live in `docs/contracts/` and change only via coordinator-approved PR.
 
