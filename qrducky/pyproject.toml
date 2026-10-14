@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qrducky"
+version = "0.1.0"
+description = "qr-ducky: QR keystroke-injection tooling for authorized lab security research (layout-safe encoding, print sheets, calibration harness)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "QR-Code-Compromise research" }]
+dependencies = [
+    "segno>=1.6",
+]
+
+[project.optional-dependencies]
+bench = ["pyserial>=3.5"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+qr-ducky = "qrducky.cli:main"
+
+[tool.setuptools]
+packages = ["qrducky"]
