@@ -1,0 +1,3 @@
+model,vendor,interface,attackable,descriptor_hash,prefix,suffix,min_delay_ms,max_cps,notes
+EXAMPLE-HID-Wedge,ExampleVendor,hid-keyboard,yes,sha256:0000000000000000000000000000000000000000000000000000000000000000,\t,\r\n,10,80,EXAMPLE row - replace with real W1.1 measurement. Generic HID-keyboard wedge: scans arrive as keystrokes (bInterfaceClass 03h proto 01h). prefix/suffix use escaped notation (\t tab, \r\n Enter).
+EXAMPLE-CDC-Serial,ExampleVendor,cdc-serial,no,sha256:0000000000000000000000000000000000000000000000000000000000000000,,,,,EXAMPLE row - replace with real W1.1 measurement. CDC-serial scanner: data only reaches host via driver/app reading the serial port; not usable as a HID keystroke injector.
